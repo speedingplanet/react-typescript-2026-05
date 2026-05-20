@@ -95,7 +95,7 @@ export default function VehicleList() {
 				{sortedVehicles.map((vehicle) => (
 					<tr key={vehicle.id}>
 						{columns.map((column) => (
-							<td key={column}>{vehicle[column as keyof Vehicle]}</td>
+							<td key={column}>{vehicle[column]}</td>
 						))}
 					</tr>
 				))}
