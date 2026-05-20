@@ -1,4 +1,5 @@
 import './App.css';
+import VehicleList from './VehicleList';
 
 function App() {
 	return (
@@ -10,6 +11,11 @@ function App() {
 						<hr />
 					</div>
 				</header>
+				<div className="row">
+					<div className="col">
+						<VehicleList />
+					</div>
+				</div>
 			</main>
 		</>
 	);
