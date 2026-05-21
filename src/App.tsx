@@ -15,6 +15,9 @@ function App() {
 					<nav className="col-2">
 						<ul className="list-unstyled">
 							<li>
+								<Link to="/hello-world">Hello world</Link>
+							</li>
+							<li>
 								<Link to="/clients">Clients</Link>
 							</li>
 							<li>

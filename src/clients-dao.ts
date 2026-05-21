@@ -1,8 +1,22 @@
 import type { Client, DraftClient } from './index-types';
 
-const baseUrl = 'http://localhost:8001/clients';
+const baseUrl = 'http://localhost:8001/clients?_delay=3000';
 
-async function fetchAllClients() {}
+async function fetchAllClients(): Promise<Client[]> {
+	try {
+		let response = await fetch(baseUrl); // --> Promise<Response>
+
+		// if 200 >= response.status <= 299
+		if (response.ok) {
+			return (await response.json()) as Client[];
+		} else {
+			throw new Error(`Bad status: ${response.status}`);
+		}
+	} catch (error) {
+		console.error('Something went wrong:', error);
+		throw error;
+	}
+}
 
 async function addClient(client: DraftClient): Promise<Client> {
 	try {
