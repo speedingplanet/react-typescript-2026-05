@@ -1,10 +1,24 @@
 import { createFileRoute } from '@tanstack/react-router';
+import makesModels from '../data/makes-and-models.json' with { type: 'json' };
+import { useState } from 'react';
+
+let makesModelsArray = Array.from(makesModels);
 
 export const Route = createFileRoute('/vehicles/add')({
-	component: RouteComponent,
+	component: AddVehicle,
 });
 
-function RouteComponent() {
+function AddVehicle() {
+	const [models, setModels] = useState<string[]>([]);
+
+	let makes = makesModelsArray.map((mm) => mm.make);
+
+	function handleChooseMake(event: React.ChangeEvent<HTMLSelectElement>) {
+		let make = event.target.value;
+		let foundConfig = makesModelsArray.find((mm) => mm.make === make);
+		if (foundConfig !== undefined) setModels(foundConfig.models);
+	}
+
 	return (
 		<form>
 			<div className="col">
@@ -35,12 +49,17 @@ function RouteComponent() {
 					name="make"
 					id="make"
 					className="form-select"
+					onChange={handleChooseMake}
 				>
-					<option value="">Audi</option>
-					<option value="">Acura</option>
-					<option value="">Honda</option>
-					<option value="">Ford</option>
-					<option value="">Chevrolet</option>
+					<option value="">Please choose a make</option>
+					{makes.map((make) => (
+						<option
+							key={make}
+							value={make}
+						>
+							{make}
+						</option>
+					))}
 				</select>
 			</div>
 			<div>
@@ -55,11 +74,17 @@ function RouteComponent() {
 					id="model"
 					className="form-select"
 				>
-					<option value="">A4</option>
-					<option value="">Integra</option>
-					<option value="">Civic</option>
-					<option value="">Mustang</option>
-					<option value="">Bolt</option>
+					<option value="">Please choose a model</option>
+					{models.length > 0
+						? models.map((model) => (
+								<option
+									key={model}
+									value={model}
+								>
+									{model}
+								</option>
+							))
+						: null}
 				</select>
 			</div>
 			<div className="mb-1">
@@ -155,7 +180,7 @@ function RouteComponent() {
 						type="checkbox"
 						className="form-check-input"
 						id="operable"
-						checked
+						defaultChecked
 					/>
 					<label
 						htmlFor="operable"
@@ -170,7 +195,7 @@ function RouteComponent() {
 						name="activeStatus"
 						id="active-status"
 						className="form-check-input"
-						checked
+						defaultChecked
 					/>
 					<label
 						htmlFor="active-status"
