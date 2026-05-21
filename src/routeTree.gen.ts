@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VehiclesRouteImport } from './routes/vehicles'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as SteveRouteRouteImport } from './routes/steve/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VehiclesSearchRouteImport } from './routes/vehicles.search'
 import { Route as VehiclesListRouteImport } from './routes/vehicles.list'
 import { Route as VehiclesAddRouteImport } from './routes/vehicles.add'
+import { Route as SteveHelloSteveRouteImport } from './routes/steve/hello-steve'
 import { Route as ClientsSearchRouteImport } from './routes/clients.search'
 import { Route as ClientsListRouteImport } from './routes/clients.list'
 import { Route as ClientsAddRouteImport } from './routes/clients.add'
@@ -33,6 +35,11 @@ const ClientsRoute = ClientsRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SteveRouteRoute = SteveRouteRouteImport.update({
+  id: '/steve',
+  path: '/steve',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,6 +62,11 @@ const VehiclesAddRoute = VehiclesAddRouteImport.update({
   path: '/add',
   getParentRoute: () => VehiclesRoute,
 } as any)
+const SteveHelloSteveRoute = SteveHelloSteveRouteImport.update({
+  id: '/hello-steve',
+  path: '/hello-steve',
+  getParentRoute: () => SteveRouteRoute,
+} as any)
 const ClientsSearchRoute = ClientsSearchRouteImport.update({
   id: '/search',
   path: '/search',
@@ -73,24 +85,28 @@ const ClientsAddRoute = ClientsAddRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
   '/clients/search': typeof ClientsSearchRoute
+  '/steve/hello-steve': typeof SteveHelloSteveRoute
   '/vehicles/add': typeof VehiclesAddRoute
   '/vehicles/list': typeof VehiclesListRoute
   '/vehicles/search': typeof VehiclesSearchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
   '/clients/search': typeof ClientsSearchRoute
+  '/steve/hello-steve': typeof SteveHelloSteveRoute
   '/vehicles/add': typeof VehiclesAddRoute
   '/vehicles/list': typeof VehiclesListRoute
   '/vehicles/search': typeof VehiclesSearchRoute
@@ -98,12 +114,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
   '/clients/search': typeof ClientsSearchRoute
+  '/steve/hello-steve': typeof SteveHelloSteveRoute
   '/vehicles/add': typeof VehiclesAddRoute
   '/vehicles/list': typeof VehiclesListRoute
   '/vehicles/search': typeof VehiclesSearchRoute
@@ -112,36 +130,42 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/steve'
     | '/about'
     | '/clients'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
     | '/clients/search'
+    | '/steve/hello-steve'
     | '/vehicles/add'
     | '/vehicles/list'
     | '/vehicles/search'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/steve'
     | '/about'
     | '/clients'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
     | '/clients/search'
+    | '/steve/hello-steve'
     | '/vehicles/add'
     | '/vehicles/list'
     | '/vehicles/search'
   id:
     | '__root__'
     | '/'
+    | '/steve'
     | '/about'
     | '/clients'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
     | '/clients/search'
+    | '/steve/hello-steve'
     | '/vehicles/add'
     | '/vehicles/list'
     | '/vehicles/search'
@@ -149,6 +173,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SteveRouteRoute: typeof SteveRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ClientsRoute: typeof ClientsRouteWithChildren
   VehiclesRoute: typeof VehiclesRouteWithChildren
@@ -175,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/steve': {
+      id: '/steve'
+      path: '/steve'
+      fullPath: '/steve'
+      preLoaderRoute: typeof SteveRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -205,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VehiclesAddRouteImport
       parentRoute: typeof VehiclesRoute
     }
+    '/steve/hello-steve': {
+      id: '/steve/hello-steve'
+      path: '/hello-steve'
+      fullPath: '/steve/hello-steve'
+      preLoaderRoute: typeof SteveHelloSteveRouteImport
+      parentRoute: typeof SteveRouteRoute
+    }
     '/clients/search': {
       id: '/clients/search'
       path: '/search'
@@ -228,6 +267,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface SteveRouteRouteChildren {
+  SteveHelloSteveRoute: typeof SteveHelloSteveRoute
+}
+
+const SteveRouteRouteChildren: SteveRouteRouteChildren = {
+  SteveHelloSteveRoute: SteveHelloSteveRoute,
+}
+
+const SteveRouteRouteWithChildren = SteveRouteRoute._addFileChildren(
+  SteveRouteRouteChildren,
+)
 
 interface ClientsRouteChildren {
   ClientsAddRoute: typeof ClientsAddRoute
@@ -262,6 +313,7 @@ const VehiclesRouteWithChildren = VehiclesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SteveRouteRoute: SteveRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ClientsRoute: ClientsRouteWithChildren,
   VehiclesRoute: VehiclesRouteWithChildren,
