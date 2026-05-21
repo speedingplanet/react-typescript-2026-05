@@ -21,14 +21,7 @@
 import { useState } from 'react';
 import { orderBy } from 'lodash-es';
 import { vehicles } from './data/vehicles.json' with { type: 'json' };
-import type { Vehicle } from './index-types';
-
-export type SortDirection = 'asc' | 'desc';
-
-export interface SortConfig<T> {
-	sortField: keyof T | '';
-	sortDirection: SortDirection;
-}
+import type { SortConfig, SortDirection, Vehicle } from './index-types';
 
 let initialSortConfig: SortConfig<Vehicle> = {
 	sortField: '',
@@ -82,6 +75,7 @@ export default function VehicleList() {
 					{columns.map((column) => (
 						<th
 							key={column}
+							className="clickable"
 							onClick={() => handleColumnClick(column)}
 						>
 							{column}
