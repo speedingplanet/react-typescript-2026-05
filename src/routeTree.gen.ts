@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VehiclesRouteImport } from './routes/vehicles'
+import { Route as HelloWorldRouteImport } from './routes/hello-world'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as SteveRouteRouteImport } from './routes/steve/route'
@@ -25,6 +26,11 @@ import { Route as ClientsAddRouteImport } from './routes/clients.add'
 const VehiclesRoute = VehiclesRouteImport.update({
   id: '/vehicles',
   path: '/vehicles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelloWorldRoute = HelloWorldRouteImport.update({
+  id: '/hello-world',
+  path: '/hello-world',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClientsRoute = ClientsRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
+  '/hello-world': typeof HelloWorldRoute
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
+  '/hello-world': typeof HelloWorldRoute
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/steve': typeof SteveRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/clients': typeof ClientsRouteWithChildren
+  '/hello-world': typeof HelloWorldRoute
   '/vehicles': typeof VehiclesRouteWithChildren
   '/clients/add': typeof ClientsAddRoute
   '/clients/list': typeof ClientsListRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/steve'
     | '/about'
     | '/clients'
+    | '/hello-world'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/steve'
     | '/about'
     | '/clients'
+    | '/hello-world'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/steve'
     | '/about'
     | '/clients'
+    | '/hello-world'
     | '/vehicles'
     | '/clients/add'
     | '/clients/list'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   SteveRouteRoute: typeof SteveRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ClientsRoute: typeof ClientsRouteWithChildren
+  HelloWorldRoute: typeof HelloWorldRoute
   VehiclesRoute: typeof VehiclesRouteWithChildren
 }
 
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/vehicles'
       fullPath: '/vehicles'
       preLoaderRoute: typeof VehiclesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hello-world': {
+      id: '/hello-world'
+      path: '/hello-world'
+      fullPath: '/hello-world'
+      preLoaderRoute: typeof HelloWorldRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clients': {
@@ -316,6 +336,7 @@ const rootRouteChildren: RootRouteChildren = {
   SteveRouteRoute: SteveRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ClientsRoute: ClientsRouteWithChildren,
+  HelloWorldRoute: HelloWorldRoute,
   VehiclesRoute: VehiclesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
