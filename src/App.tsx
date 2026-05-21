@@ -1,5 +1,5 @@
+import { Link, Outlet } from '@tanstack/react-router';
 import './App.css';
-import VehicleList from './VehicleListTable';
 
 function App() {
 	return (
@@ -12,8 +12,18 @@ function App() {
 					</div>
 				</header>
 				<div className="row">
+					<nav className="col-2">
+						<ul className="list-unstyled">
+							<li>
+								<Link to="/clients">Clients</Link>
+							</li>
+							<li>
+								<Link to="/vehicles">Vehicles</Link>
+							</li>
+						</ul>
+					</nav>
 					<div className="col">
-						<VehicleList />
+						<Outlet />
 					</div>
 				</div>
 			</main>

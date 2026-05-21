@@ -1,39 +1,20 @@
-<<<<<<< HEAD
-//
-
-/*
-- Where do we get a list of Vehicles? ../data/vehicles.json
-
-- What are we going to render the list to?
-	Could be a Bootstrap table (see the .table class)
-	or a Bootstrap grid
-	or custom CSS
-
-- What fields are we going to render? 
-	- Make
-	- Model
-	- Year
-	- activeStatus
-	- type
-	- vin
-	- intakeDate
-*/
-
-=======
->>>>>>> tanstack-router
+import { createFileRoute } from '@tanstack/react-router';
+import type { SortConfig, SortDirection, Vehicle } from '../index-types';
 import { useState } from 'react';
 import { orderBy } from 'lodash-es';
-import { vehicles } from './data/vehicles.json' with { type: 'json' };
-import type { SortConfig, SortDirection, Vehicle } from './index-types';
+
+export const Route = createFileRoute('/vehicles/list')({
+	component: VehicleList,
+});
 
 let initialSortConfig: SortConfig<Vehicle> = {
 	sortField: '',
 	sortDirection: 'asc',
 };
 
-export default function VehicleList() {
+function VehicleList() {
 	let [sortConfig, setSortConfig] = useState(initialSortConfig);
-
+	let vehicles: Vehicle[] = [];
 	let columns: Array<keyof Vehicle> = [
 		'make',
 		'model',
@@ -91,7 +72,7 @@ export default function VehicleList() {
 				{sortedVehicles.map((vehicle) => (
 					<tr key={vehicle.id}>
 						{columns.map((column) => (
-							<td key={column}>{vehicle[column]}</td>
+							<td key={column}>{vehicle[column] as string}</td>
 						))}
 					</tr>
 				))}
